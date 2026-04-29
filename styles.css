@@ -1,0 +1,212 @@
+:root {
+  color-scheme: light;
+  --bg: #f7f8fb;
+  --panel: #ffffff;
+  --line: #d9dee8;
+  --line-strong: #bac4d4;
+  --header: #eef3f9;
+  --text: #162033;
+  --muted: #647187;
+  --accent: #1976d2;
+  --accent-dark: #0f5dad;
+  --focus: #1a73e8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.app-shell {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 28px 0;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.05;
+  letter-spacing: 0;
+}
+
+.download-button {
+  min-height: 44px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  box-shadow: 0 8px 20px rgba(25, 118, 210, 0.2);
+}
+
+.download-button:hover {
+  background: var(--accent-dark);
+}
+
+.download-button.secondary {
+  border: 1px solid var(--line-strong);
+  background: #ffffff;
+  color: var(--accent);
+  box-shadow: none;
+}
+
+.download-button.secondary:hover {
+  background: #eef6ff;
+}
+
+.download-button:focus-visible,
+.sheet td:focus {
+  outline: 3px solid rgba(26, 115, 232, 0.24);
+  outline-offset: -2px;
+}
+
+.editor-wrap {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  box-shadow: 0 18px 50px rgba(32, 43, 68, 0.08);
+}
+
+.sheet-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 42px;
+  padding: 0 14px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #24a148;
+}
+
+.sheet-scroller {
+  overflow: auto;
+  max-height: calc(100vh - 160px);
+}
+
+.sheet {
+  width: 100%;
+  min-width: 860px;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.sheet th,
+.sheet td {
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.sheet th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  height: 34px;
+  background: var(--header);
+  color: #526176;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.sheet .corner,
+.row-head {
+  width: 48px;
+  min-width: 48px;
+}
+
+.row-head {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--header);
+  color: #526176;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.sheet td {
+  height: 42px;
+  min-width: 126px;
+  padding: 8px 10px;
+  background: #ffffff;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.25;
+  vertical-align: top;
+  word-break: break-word;
+}
+
+.sheet td:focus {
+  position: relative;
+  z-index: 3;
+  background: #f7fbff;
+}
+
+@media (max-width: 680px) {
+  .app-shell {
+    width: min(100% - 20px, 1180px);
+    padding: 18px 0;
+  }
+
+  .topbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .header-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .download-button {
+    width: 100%;
+  }
+
+  .sheet-scroller {
+    max-height: calc(100vh - 190px);
+  }
+}

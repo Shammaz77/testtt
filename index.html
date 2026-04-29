@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sheet XPF Editor</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Simple web app</p>
+          <h1>Sheet XPF Editor</h1>
+        </div>
+        <div class="header-actions">
+          <button id="openXpf" class="download-button" type="button">
+            Open XPF in Browser
+          </button>
+          <button id="downloadXpf" class="download-button secondary" type="button">
+            Download Self-Opening XPF
+          </button>
+          <button id="importXpf" class="download-button secondary" type="button">
+            Open Existing XPF
+          </button>
+          <input id="xpfFileInput" type="file" accept=".xpf,application/xpf" hidden />
+        </div>
+      </header>
+
+      <section class="editor-wrap" aria-label="Spreadsheet editor">
+        <div class="sheet-toolbar">
+          <span class="status-dot"></span>
+          <span id="sheetStatus">Type in any cell, then open or download XPF</span>
+        </div>
+        <div class="sheet-scroller">
+          <table id="sheet" class="sheet" aria-label="Editable spreadsheet">
+            <thead>
+              <tr id="columnHeaders">
+                <th class="corner" aria-hidden="true"></th>
+              </tr>
+            </thead>
+            <tbody id="sheetBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
