@@ -1,0 +1,32 @@
+{
+  "name": "Sheet XPF Editor",
+  "short_name": "Sheet XPF",
+  "description": "Create, open, and view SheetXPF documents.",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f7f8fb",
+  "theme_color": "#1976d2",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "launch_handler": {
+    "client_mode": "navigate-new"
+  },
+  "file_handlers": [
+    {
+      "action": "/index.html?open=xpf",
+      "name": "Sheet XPF Document",
+      "accept": {
+        "text/html": [".xpf"],
+        "text/plain": [".xpf"]
+      },
+      "launch_type": "single-client"
+    }
+  ]
+}

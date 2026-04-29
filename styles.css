@@ -88,6 +88,10 @@ h1 {
   background: #eef6ff;
 }
 
+.is-hidden {
+  display: none;
+}
+
 .download-button:focus-visible,
 .sheet td:focus {
   outline: 3px solid rgba(26, 115, 232, 0.24);

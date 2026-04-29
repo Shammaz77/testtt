@@ -9,8 +9,10 @@ const sheetBody = document.getElementById("sheetBody");
 const openButton = document.getElementById("openXpf");
 const downloadButton = document.getElementById("downloadXpf");
 const importButton = document.getElementById("importXpf");
+const installButton = document.getElementById("installApp");
 const fileInput = document.getElementById("xpfFileInput");
 const sheetStatus = document.getElementById("sheetStatus");
+let deferredInstallPrompt = null;
 
 const sampleData = {
   "0-0": "Project",
@@ -273,7 +275,7 @@ function openXpfInBrowser() {
 
 function downloadXpf() {
   const xpfBlob = new Blob([createXpfWebDocument(createXpfData())], {
-    type: "application/xpf",
+    type: "text/html",
   });
   const url = URL.createObjectURL(xpfBlob);
   const link = document.createElement("a");
@@ -312,8 +314,59 @@ function handleXpfFileSelection() {
   reader.readAsText(file);
 }
 
+async function handleLaunchFiles(files) {
+  for (const fileHandle of files) {
+    const file = await fileHandle.getFile();
+    loadXpfData(parseXpfFile(await file.text()));
+    sheetStatus.textContent = `Opened ${file.name}`;
+    break;
+  }
+}
+
+function setupFileHandling() {
+  if ("launchQueue" in window && "LaunchParams" in window) {
+    window.launchQueue.setConsumer((launchParams) => {
+      if (launchParams.files?.length) {
+        handleLaunchFiles(launchParams.files).catch((error) => {
+          sheetStatus.textContent = error.message;
+        });
+      }
+    });
+  }
+}
+
+function setupPwaInstall() {
+  if (!("serviceWorker" in navigator)) {
+    return;
+  }
+
+  navigator.serviceWorker.register("service-worker.js").catch(() => {});
+
+  window.addEventListener("beforeinstallprompt", (event) => {
+    event.preventDefault();
+    deferredInstallPrompt = event;
+    installButton.classList.remove("is-hidden");
+  });
+}
+
+async function installApp() {
+  if (!deferredInstallPrompt) {
+    sheetStatus.textContent =
+      "Open this app from http://127.0.0.1:5500/ or a production HTTPS URL to install it.";
+    return;
+  }
+
+  deferredInstallPrompt.prompt();
+  await deferredInstallPrompt.userChoice;
+  deferredInstallPrompt = null;
+  installButton.classList.add("is-hidden");
+}
+
 buildSheet();
+setupPwaInstall();
+setupFileHandling();
 openButton.addEventListener("click", openXpfInBrowser);
 downloadButton.addEventListener("click", downloadXpf);
 importButton.addEventListener("click", openExistingXpf);
 fileInput.addEventListener("change", handleXpfFileSelection);
+installButton.addEventListener("click", installApp);
